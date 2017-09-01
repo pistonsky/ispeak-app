@@ -23,7 +23,7 @@ import { BoldText, LightText } from '../components/Texts';
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'CS50',
+      title: 'iSpeak',
       headerTintColor: styles.headerTintColor,
       headerBackTitle: 'Back',
       headerStyle: styles.headerStyle,
