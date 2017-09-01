@@ -47,7 +47,7 @@ class AppContainer extends React.Component {
   }
 
   async _loadAssetsAsync() {
-    const imageAssets = this._cacheImages([require('./assets/memory.png')]);
+    const imageAssets = this._cacheImages([require('./assets/svgs/processed/memory.svg')]);
     const fontAssets = this._cacheFonts([
       fonts,
       EvilIcons.font,

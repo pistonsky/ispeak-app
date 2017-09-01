@@ -15,6 +15,8 @@ const maybeInitialize = () => {
 };
 
 const track = (event, options = null) => {
+  return;
+
   maybeInitialize();
 
   if (options) {
