@@ -3,7 +3,7 @@
     "name": "iSpeak",
     "description": "Learn English with songs",
     "slug": "ispeak",
-    "privacy": "private",
+    "privacy": "unlisted",
     "sdkVersion": "20.0.0",
     "version": "0.1.0",
     "orientation": "portrait",
@@ -11,6 +11,7 @@
     "icon": "./assets/icons/app.png",
     "loading": {
       "icon": "./assets/icons/app.png",
+      "backgroundColor": "#A51C30",
       "hideExponentText": true
     },
     "packagerOpts": {
