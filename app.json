@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Harvard CS50",
-    "description": "A companion app for CS50",
-    "slug": "harvard-cs50",
-    "privacy": "public",
+    "name": "iSpeak",
+    "description": "Learn English with songs",
+    "slug": "ispeak",
+    "privacy": "private",
     "sdkVersion": "20.0.0",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "primaryColor": "#A51C30",
     "icon": "./assets/icons/app.png",
@@ -16,14 +16,14 @@
     "packagerOpts": {
       "assetExts": ["ttf", "mp4", "xml"]
     },
-    "scheme": "harvardcs50",
+    "scheme": "ispeak",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "exp.host.cs50",
+      "bundleIdentifier": "exp.host.ispeak",
       "buildNumber": "1"
     },
     "android": {
-      "package": "exp.host.cs50"
+      "package": "exp.host.ispeak"
     },
     "hooks": {
     }
