@@ -98,7 +98,7 @@ class HomeScreen extends React.Component {
               },
               styles.mainViewStyle,
             ]}>
-            Browse Lectures
+            Browse Lessons
           </BoldText>
           {this.state.data &&
             <Carousel
