@@ -250,25 +250,6 @@ class WeekScreen extends React.Component {
             {this.state.subtitlesVisible ? 'Hide Subtitles' : 'Show Subtitles'}
           </RegularText>
         </View>
-        <View
-          style={{
-            backgroundColor: colors.primary,
-            marginBottom: 20,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingLeft: styles.mainViewStyle.marginLeft,
-            paddingRight: styles.mainViewStyle.marginRight,
-          }}>
-          <Downloader
-            id={this.state.data.weekNumber}
-            style={{
-              display: this.state.isPortrait ? 'flex' : 'none',
-              marginBottom: 40,
-            }}
-          />
-          <RateSwitcher changeRate={this.changeRate.bind(this)} />
-        </View>
         <ScrollView
           contentContainerStyle={{
             justifyContent: 'space-between',
