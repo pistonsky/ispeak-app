@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "abi-expo-videoplayer": "^0.1.6",
+    "axios": "^0.16.2",
     "eslint-plugin-prettier": "^2.1.1",
     "expo": "^20.0.0",
     "expo-three": "^1.0.0",

@@ -173,7 +173,7 @@ class WeekScreen extends React.Component {
             isMuted: config.muteVideo,
             resizeMode: Video.RESIZE_MODE_CONTAIN,
             source: {
-              uri: this.state.data.videos['240p'],
+              uri: this.state.data.videos['360p'],
             },
             ref: component => {
               this._playbackInstance = component;
