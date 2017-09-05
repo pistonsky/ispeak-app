@@ -185,12 +185,12 @@ class WeekScreen extends React.Component {
         }}>
         <View style={{
           width: Dimensions.get('window').width,
-          height: Dimensions.get('window').width * 9 / 16 + 100,
+          height: Dimensions.get('window').width * 9 / 16 + this.state.isPortrait*100,
           justifyContent: 'center',
           alignItems: 'center'
         }}>
           <Subtitle
-            visible={this.state.subtitlesVisible}
+            visible={this.state.subtitlesVisible && this.state.isPortrait}
             textStyle={{
               textAlign: 'center',
               fontWeight: 'bold'
@@ -261,9 +261,9 @@ class WeekScreen extends React.Component {
             style={[
               styles.h1Style,
               styles.mainViewStyle,
-              { marginBottom: 30 },
+              { marginTop: 20, marginBottom: 20 },
             ]}>
-            Course Materials
+            Lesson Notes
           </Text>
 
           {this.state.linksArr.map(({ title, url, icon }) =>
