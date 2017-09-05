@@ -12,6 +12,7 @@ class RateSwitcher extends React.Component {
 
   render() {
     const rates = {
+      '0.5': 0.5,
       '1': 1.5,
       '1.5': 2,
       '2': 1,
