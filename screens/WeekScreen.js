@@ -4,7 +4,11 @@ import { ScreenOrientation, Video } from 'expo';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import VideoPlayer from 'abi-expo-videoplayer';
+import axios from 'axios';
+import subplay from 'subplay';
 
+import Subtitle from '../components/Subtitle';
+import { RegularText } from '../components/Texts';
 import Row from '../components/Row';
 import Analytics from '../utils/Analytics';
 import styles from '../styles/style';
@@ -97,6 +101,8 @@ class WeekScreen extends React.Component {
       links,
       linksArr,
       playFromPositionMillis: this.props.playback,
+      encodedSubtitleText: '',
+      subtitlesVisible: false,
     };
   }
 
@@ -110,13 +116,22 @@ class WeekScreen extends React.Component {
   }
 
   // Only on this screen, allow landscape orientations
-  componentDidMount() {
+  async componentDidMount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
     Dimensions.addEventListener(
       'change',
       this.orientationChangeHandler.bind(this)
     );
     Analytics.track(Analytics.events.USER_WATCHED_VIDEO);
+    const result = await axios.get(this.state.data.subtitles);
+    const srt = result.data;
+    this._updateSubtitles = subplay(
+      srt,
+      encodedSubtitleText => {
+        this.setState({ encodedSubtitleText });
+      },
+      { millis: true }
+    );
   }
 
   componentWillUnmount() {
@@ -136,6 +151,7 @@ class WeekScreen extends React.Component {
     if (playbackStatus.isLoaded) {
       this.props.updatePlaybackTime(playbackStatus.positionMillis);
     }
+    this._updateSubtitles(playbackStatus.positionMillis, true, false, playbackStatus.isPlaying);
   }
 
   _errorCallback(error) {
@@ -167,38 +183,73 @@ class WeekScreen extends React.Component {
           minHeight: Dimensions.get('window').height,
           backgroundColor: 'white',
         }}>
-        <VideoPlayer
-          videoProps={{
-            shouldPlay: config.autoplayVideo,
-            isMuted: config.muteVideo,
-            resizeMode: Video.RESIZE_MODE_CONTAIN,
-            source: {
-              uri: this.state.data.videos['360p'],
-            },
-            ref: component => {
-              this._playbackInstance = component;
-            },
-            positionMillis: this.state.playFromPositionMillis,
+        <View style={{
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').width * 9 / 16 + 100,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Subtitle
+            visible={this.state.subtitlesVisible}
+            textStyle={{
+              textAlign: 'center',
+              fontWeight: 'bold'
+            }}
+            encodedText={this.state.encodedSubtitleText}
+          />
+          <VideoPlayer
+            videoProps={{
+              shouldPlay: config.autoplayVideo,
+              isMuted: config.muteVideo,
+              resizeMode: Video.RESIZE_MODE_CONTAIN,
+              source: {
+                uri: this.state.data.videos['360p'],
+              },
+              ref: component => {
+                this._playbackInstance = component;
+              },
+            }}
+            isPortrait={this.state.isPortrait}
+            switchToLandscape={this.switchToLandscape.bind(this)}
+            switchToPortrait={this.switchToPortrait.bind(this)}
+            playbackCallback={this._playbackCallback.bind(this)}
+            errorCallback={this._errorCallback.bind(this)}
+            thumbImage={THUMB_IMAGE}
+            trackImage={TRACK_IMAGE}
+            playIcon={PlayIcon}
+            pauseIcon={PauseIcon}
+            fullscreenEnterIcon={FullscreenEnterIcon}
+            fullscreenExitIcon={FullscreenExitIcon}
+            replayIcon={ReplayIcon}
+            textStyle={{
+              color: colors.tertiary,
+              fontFamily: 'custom-regular',
+              textAlign: 'left',
+              fontSize: 12,
+            }}
+          />
+        </View>
+        <View
+          style={{
+            height: 50,
+            width: Dimensions.get('window').width,
+            backgroundColor: this.state.subtitlesVisible ? colors.tertiary : colors.primary,
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
-          isPortrait={this.state.isPortrait}
-          switchToLandscape={this.switchToLandscape.bind(this)}
-          switchToPortrait={this.switchToPortrait.bind(this)}
-          playbackCallback={this._playbackCallback.bind(this)}
-          errorCallback={this._errorCallback.bind(this)}
-          thumbImage={THUMB_IMAGE}
-          trackImage={TRACK_IMAGE}
-          playIcon={PlayIcon}
-          pauseIcon={PauseIcon}
-          fullscreenEnterIcon={FullscreenEnterIcon}
-          fullscreenExitIcon={FullscreenExitIcon}
-          replayIcon={ReplayIcon}
-          textStyle={{
-            color: colors.tertiary,
-            fontFamily: 'custom-regular',
-            textAlign: 'left',
-            fontSize: 12,
+          onTouchStart={() => {
+            this.setState({ subtitlesVisible: true });
           }}
-        />
+          onTouchEnd={() => {
+            this.setState({ subtitlesVisible: false });
+          }}
+        >
+          <RegularText style={{
+            color: this.state.subtitlesVisible ? colors.primary : colors.tertiary
+          }}>
+            {this.state.subtitlesVisible ? 'Hide Subtitles' : 'Show Subtitles'}
+          </RegularText>
+        </View>
         <View
           style={{
             backgroundColor: colors.primary,
