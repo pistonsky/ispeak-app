@@ -245,9 +245,9 @@ class WeekScreen extends React.Component {
           }}
         >
           <RegularText style={{
-            color: this.state.subtitlesVisible ? colors.primary : colors.tertiary
+            color: this.state.subtitlesVisible ? colors.primary : '#ffffff'
           }}>
-            {this.state.subtitlesVisible ? 'Hide Subtitles' : 'Show Subtitles'}
+            {this.state.subtitlesVisible ? 'Hide Russian' : 'Show Russian'}
           </RegularText>
         </View>
         <ScrollView

@@ -34,7 +34,7 @@ class HomeScreen extends React.Component {
           onPress={() => {
             navigation.navigate('Resources');
           }}>
-          <Ionicons name="md-list-box" size={28} color={colors.secondary} />
+          <Ionicons name="md-list-box" size={28} color='#ffffff' />
         </TouchableOpacity>
       ),
     };
@@ -156,7 +156,7 @@ class HomeScreen extends React.Component {
                         textWidth={
                           (itemWidth - itemHorizontalMargin * 2) * 2 / 3
                         }
-                        source={require('../assets/svgs/processed/memory.svg')}
+                        thumb={week.thumb}
                         title={week.title.toLowerCase()}
                         desc={week.desc.toLowerCase()}
                         weekNumber={week.weekNumber}

@@ -17,18 +17,18 @@ const fontSize = n => {
 
 // Header styles
 
-const headerTintColor = colors.secondary;
+const headerTintColor = '#ffffff';
 
 const headerTitleStyle = {
   fontFamily: 'custom-black',
-  fontSize: fontSize(1),
+  fontSize: fontSize(1.5),
   letterSpacing: -0.4,
 };
 
 const headerStyle = {
-  borderBottomWidth: 1,
+  borderBottomWidth: 0,
   borderColor: colors.secondary,
-  backgroundColor: 'white',
+  backgroundColor: colors.tertiary,
   height: Platform.OS === 'ios' ? 80 : 100,
 };
 
