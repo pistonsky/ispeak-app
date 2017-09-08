@@ -4,34 +4,6 @@ import styles from '../styles/style';
 import colors from '../styles/colors';
 import { RegularText } from '../components/Texts';
 
-import AlgorithmsIcon from '../components/svgs/algorithms';
-import ArraysIcon from '../components/svgs/Arrays';
-import HttpIcon from '../components/svgs/Http';
-import MachinelearningIcon from '../components/svgs/Machinelearning';
-import PythonIcon from '../components/svgs/Python';
-import DatastructuresIcon from '../components/svgs/Datastructures';
-import MemoryIcon from '../components/svgs/Memory';
-import ScratchIcon from '../components/svgs/Scratch';
-import CIcon from '../components/svgs/C';
-import SqlIcon from '../components/svgs/Sql';
-import CelebrationIcon from '../components/svgs/Celebration';
-import JavascriptIcon from '../components/svgs/Javascript';
-
-const IconMappings = [
-  ScratchIcon,
-  CIcon,
-  ArraysIcon,
-  AlgorithmsIcon,
-  MemoryIcon,
-  DatastructuresIcon,
-  HttpIcon,
-  MachinelearningIcon,
-  PythonIcon,
-  SqlIcon,
-  JavascriptIcon,
-  CelebrationIcon,
-];
-
 class WeekBox extends React.Component {
   state = {
     active: false,
@@ -41,7 +13,6 @@ class WeekBox extends React.Component {
       color: this.state.active ? colors.complementary : colors.primary,
       fontSize: styles.fontSize(2),
     };
-    const Icon = IconMappings[this.props.weekNumber];
     return (
       <TouchableHighlight
         onPress={this.props.onPress}
@@ -70,7 +41,12 @@ class WeekBox extends React.Component {
               marginLeft: 10,
               marginRight: 10,
             }}>
-            <Icon />
+            <Image
+              style={{
+                width: 100,
+                height: 100
+              }}
+              source={{ uri: this.props.thumb }} />
           </View>
           <View
             style={{
