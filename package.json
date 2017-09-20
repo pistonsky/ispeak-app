@@ -1,8 +1,8 @@
 {
-  "name": "HarvardCS50",
-  "version": "0.0.1",
-  "description": "Harvard's CS50 application.",
-  "author": "Expo",
+  "name": "iSpeak",
+  "version": "0.1.2",
+  "description": "Learn English with songs",
+  "author": "Alexander Pistonsky",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
