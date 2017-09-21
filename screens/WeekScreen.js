@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, View, Dimensions, ScrollView } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { ScreenOrientation, Video } from 'expo';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import VideoPlayer from 'abi-expo-videoplayer';
+import VideoPlayer from '@expo/videoplayer';
 import axios from 'axios';
 import subplay from 'subplay';
 
@@ -25,45 +26,50 @@ const ICON_COLOR = colors.tertiary;
 const CENTER_ICON_SIZE = 36;
 const BOTTOM_BAR_ICON_SIZE = 30;
 
-const PlayIcon = () =>
+const PlayIcon = () => (
   <Foundation
     name={'play'}
     size={CENTER_ICON_SIZE}
     color={ICON_COLOR}
     style={{ textAlign: 'center' }}
-  />;
+  />
+);
 
-const PauseIcon = () =>
+const PauseIcon = () => (
   <Foundation
     name={'pause'}
     size={CENTER_ICON_SIZE}
     color={ICON_COLOR}
     style={{ textAlign: 'center' }}
-  />;
+  />
+);
 
-export const FullscreenEnterIcon = () =>
+export const FullscreenEnterIcon = () => (
   <MaterialIcons
     name={'fullscreen'}
     size={BOTTOM_BAR_ICON_SIZE}
     color={ICON_COLOR}
     style={{ textAlign: 'center' }}
-  />;
+  />
+);
 
-export const FullscreenExitIcon = () =>
+export const FullscreenExitIcon = () => (
   <MaterialIcons
     name={'fullscreen-exit'}
     size={BOTTOM_BAR_ICON_SIZE}
     color={ICON_COLOR}
     style={{ textAlign: 'center' }}
-  />;
+  />
+);
 
-export const ReplayIcon = () =>
+export const ReplayIcon = () => (
   <MaterialIcons
     name={'replay'}
     size={CENTER_ICON_SIZE}
     color={ICON_COLOR}
     style={{ textAlign: 'center' }}
-  />;
+  />
+);
 
 class WeekScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -72,7 +78,7 @@ class WeekScreen extends React.Component {
     headerTitleStyle: styles.headerTitleStyle,
     headerStyle: navigation.state.params.hideHeader
       ? { display: 'none', opacity: 0 }
-      : styles.headerStyle,
+      : styles.headerStyle
   });
 
   constructor(props) {
@@ -85,13 +91,13 @@ class WeekScreen extends React.Component {
     const ICONS = {
       notes: 'sticky-note-o',
       slides: 'slideshare',
-      'source code': 'code',
+      'source code': 'code'
     };
 
     const linksArr = _.map(links, (url, title) => ({
       title,
       url,
-      icon: ICONS[title],
+      icon: ICONS[title]
     }));
 
     this.state = {
@@ -102,7 +108,7 @@ class WeekScreen extends React.Component {
       linksArr,
       playFromPositionMillis: this.props.playback,
       encodedSubtitleText: '',
-      subtitlesVisible: false,
+      subtitlesVisible: false
     };
   }
 
@@ -151,7 +157,12 @@ class WeekScreen extends React.Component {
     if (playbackStatus.isLoaded) {
       this.props.updatePlaybackTime(playbackStatus.positionMillis);
     }
-    this._updateSubtitles(playbackStatus.positionMillis, true, false, playbackStatus.isPlaying);
+    this._updateSubtitles(
+      playbackStatus.positionMillis,
+      true,
+      false,
+      playbackStatus.isPlaying
+    );
   }
 
   _errorCallback(error) {
@@ -167,7 +178,7 @@ class WeekScreen extends React.Component {
     this._playbackInstance &&
       this._playbackInstance.setStatusAsync({
         rate: rate,
-        shouldCorrectPitch: true,
+        shouldCorrectPitch: true
       });
   }
 
@@ -181,14 +192,19 @@ class WeekScreen extends React.Component {
           justifyContent: 'space-between',
           flexDirection: 'column',
           minHeight: Dimensions.get('window').height,
-          backgroundColor: 'white',
-        }}>
-        <View style={{
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').width * 9 / 16 + this.state.isPortrait*100,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
+          backgroundColor: 'white'
+        }}
+      >
+        <View
+          style={{
+            width: Dimensions.get('window').width,
+            height:
+              Dimensions.get('window').width * 9 / 16 +
+              this.state.isPortrait * 100,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
           <Subtitle
             visible={this.state.subtitlesVisible && this.state.isPortrait}
             textStyle={{
@@ -203,11 +219,11 @@ class WeekScreen extends React.Component {
               isMuted: config.muteVideo,
               resizeMode: Video.RESIZE_MODE_CONTAIN,
               source: {
-                uri: this.state.data.videos['360p'],
+                uri: this.state.data.videos['360p']
               },
               ref: component => {
                 this._playbackInstance = component;
-              },
+              }
             }}
             isPortrait={this.state.isPortrait}
             switchToLandscape={this.switchToLandscape.bind(this)}
@@ -225,7 +241,7 @@ class WeekScreen extends React.Component {
               color: colors.tertiary,
               fontFamily: 'custom-regular',
               textAlign: 'left',
-              fontSize: 12,
+              fontSize: 12
             }}
           />
         </View>
@@ -233,20 +249,36 @@ class WeekScreen extends React.Component {
           style={{
             height: 50,
             width: Dimensions.get('window').width,
-            backgroundColor: this.state.subtitlesVisible ? colors.tertiary : colors.primary,
+            backgroundColor: this.state.subtitlesVisible
+              ? colors.tertiary
+              : colors.primary,
             alignItems: 'center',
             justifyContent: 'center'
           }}
-          onTouchStart={() => {
+          onTouchStart={({ nativeEvent }) => {
             this.setState({ subtitlesVisible: true });
           }}
           onTouchEnd={() => {
             this.setState({ subtitlesVisible: false });
           }}
         >
-          <RegularText style={{
-            color: this.state.subtitlesVisible ? colors.primary : '#ffffff'
-          }}>
+          <Icon
+            name="pause"
+            size={50}
+            color={this.state.subtitlesVisible ? colors.primary : '#ffffff'}
+            style={{ position: 'absolute', left: 0, top: 0 }}
+            onTouchStart={() => {
+              this._playbackInstance.pauseAsync();
+            }}
+            onTouchEnd={() => {
+              this._playbackInstance.playAsync();
+            }}
+          />
+          <RegularText
+            style={{
+              color: this.state.subtitlesVisible ? colors.primary : '#ffffff'
+            }}
+          >
             {this.state.subtitlesVisible ? 'NO RUSSIAN' : 'SHOW RUSSIAN'}
           </RegularText>
         </View>
@@ -255,18 +287,20 @@ class WeekScreen extends React.Component {
             justifyContent: 'space-between',
             flexDirection: 'column',
             display: this.state.isPortrait ? 'flex' : 'none',
-            backgroundColor: 'white',
-          }}>
+            backgroundColor: 'white'
+          }}
+        >
           <Text
             style={[
               styles.h1Style,
               styles.mainViewStyle,
-              { marginTop: 20, marginBottom: 20 },
-            ]}>
+              { marginTop: 20, marginBottom: 20 }
+            ]}
+          >
             Lesson Notes
           </Text>
 
-          {this.state.linksArr.map(({ title, url, icon }) =>
+          {this.state.linksArr.map(({ title, url, icon }) => (
             <Row
               key={title}
               text={title}
@@ -276,10 +310,10 @@ class WeekScreen extends React.Component {
                 alignSelf: 'stretch',
                 flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'space-between',
+                justifyContent: 'space-between'
               }}
             />
-          )}
+          ))}
         </ScrollView>
       </View>
     );
@@ -292,15 +326,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch({
         type: 'PLAYBACK',
         id: ownProps.navigation.state.params.data.weekNumber,
-        time,
+        time
       });
-    },
+    }
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    playback: state.playback[ownProps.navigation.state.params.data.weekNumber],
+    playback: state.playback[ownProps.navigation.state.params.data.weekNumber]
   };
 };
 

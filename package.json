@@ -10,7 +10,7 @@
     "svg-process": "node_modules/.bin/babel-node utils/svg-processor.js"
   },
   "dependencies": {
-    "abi-expo-videoplayer": "^0.1.6",
+    "@expo/videoplayer": "^0.1.6",
     "axios": "^0.16.2",
     "eslint-plugin-prettier": "^2.1.1",
     "expo": "^20.0.0",
@@ -21,6 +21,7 @@
     "react": "16.0.0-alpha.12",
     "react-mixin": "^3.0.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-20.0.0.tar.gz",
+    "react-native-elements": "^0.17.0",
     "react-native-progress": "^3.3.0",
     "react-native-snap-carousel": "^2.3.1",
     "react-native-swiper": "^1.5.4",
